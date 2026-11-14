@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rf_diffusion"
+version = "0.1.0"
+description = "Educational RFdiffusion training reimplementation from Watson et al., Nature 2023"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.23",
+    "scipy>=1.9",
+    "hydra-core>=1.3",
+    "omegaconf>=2.3",
+    "tqdm>=4.64",
+    "matplotlib>=3.7",
+    "pyyaml>=6.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["rf_diffusion*"]
+exclude = ["tests*", "docs*"]

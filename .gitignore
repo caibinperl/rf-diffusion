@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# Training artifacts. IGSO(3) tables are rebuilt on first use.
+outputs/
+schedule_cache/
+wandb/
+multirun/
+.hydra/
+
+# Downloaded weights (see README: RF_structure_prediction_weights.pt)
+models/
+*.pt
+*.pth
+*.ckpt
+
+# OS and editor
+.DS_Store
+.idea/
+.workbuddy/
+
+docs/

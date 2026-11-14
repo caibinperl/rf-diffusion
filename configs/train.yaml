@@ -1,0 +1,70 @@
+# RFdiffusion training config (Supplementary Methods Table 6).
+# Override any field from the CLI, e.g.  python scripts/train.py experiment=ppi max_steps=100
+
+experiment: base          # base | active_site | ppi | fold
+model: tiny               # tiny (educational) | rf (official RoseTTAFoldModule)
+rf_ckpt: null
+output_dir: ./outputs/base
+seed: 0
+device: cuda
+max_steps: 200            # set null for epochs * examples_per_epoch
+epochs: 5
+examples_per_epoch: 25600
+log_every: 10
+ckpt_every: 100
+self_cond_prob: 0.5
+use_wandb: false
+wandb_project: rfdiffusion-train
+
+diffuser:
+  T: 200
+  b_0: 0.01
+  b_T: 0.07
+  schedule_type: linear
+  so3_type: igso3
+  so3_schedule_type: linear
+  min_sigma: 0.02
+  max_sigma: 1.5
+  min_b: 1.06             # paper Table 6 (inference yaml uses 1.5)
+  max_b: 1.77             # paper Table 6 (inference yaml uses 2.5)
+  crd_scale: 0.25
+  truncation_level: 200
+  num_omega: 256
+  num_sigma: 64
+  cache_dir: ./schedule_cache
+
+loss:
+  w_trans: 0.5
+  w_rot: 1.0
+  w_2d: 1.0
+  d_clamp: 10.0
+  p_clamp: 0.9
+  gamma: 0.99
+  motif_loss_weight: 1.0
+  active_site_motif_weight: 10.0
+
+data:
+  pdb_dir: null
+  pdb_index: null
+  crop_size: 128          # paper uses 384; lower this for the tiny model
+  min_length: 40
+  max_length: 512
+  unconditional_prob: 0.20
+  motif_contiguous_prob: 0.50
+  motif_mask_frac_min: 0.20
+  motif_mask_frac_max: 1.00
+  hotspot_frac_max: 0.20
+  hotspot_distance: 10.0
+  synthetic_n: 128
+  synthetic_len: 64
+  num_workers: 0
+
+optim:
+  lr: 0.0005
+  weight_decay: 0.0
+  warmup_steps: 0
+  decay_every: 10000
+  decay_factor: 0.95
+  grad_clip: 1.0
+  pseudo_batch_size: 8    # paper uses 64
+  micro_batch_size: 1
